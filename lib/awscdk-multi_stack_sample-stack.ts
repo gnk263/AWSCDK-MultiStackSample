@@ -15,6 +15,9 @@ export class AwscdkMultiStackSampleStack extends cdk.Stack {
       handler: 'app.handler',
       runtime: lambda.Runtime.NODEJS_10_X,
       timeout: Duration.seconds(3),
+      environment: {
+        SYSTEM_ENV: process.env.SYSTEM_ENV ? process.env.SYSTEM_ENV : 'dev',
+      }
     });
 
     // API Gateway
