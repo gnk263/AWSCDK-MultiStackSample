@@ -9,20 +9,23 @@ export class AwscdkMultiStackSampleStack extends cdk.Stack {
 
     // The code that defines your stack goes here
 
+    const systemEnv = process.env.SYSTEM_ENV ? process.env.SYSTEM_ENV : 'dev';
+
     // Lambda
     const sampleLambda = new lambda.Function(this, 'multi-sample-Lambda', {
       code: lambda.Code.asset('src/lambda'),
       handler: 'app.handler',
       runtime: lambda.Runtime.NODEJS_10_X,
+      functionName: `aws-cdk-multi-sample-Lambda-${systemEnv}`,
       timeout: Duration.seconds(3),
       environment: {
-        SYSTEM_ENV: process.env.SYSTEM_ENV ? process.env.SYSTEM_ENV : 'dev',
+        SYSTEM_ENV: systemEnv,
       }
     });
 
     // API Gateway
     const api = new apigateway.RestApi(this, 'multi-sample-api', {
-      restApiName: 'MultiSampleApi'
+      restApiName: `AWSCDK-MultiSampleApi-${systemEnv}`
     });
 
     const integration = new apigateway.LambdaIntegration(sampleLambda, {
