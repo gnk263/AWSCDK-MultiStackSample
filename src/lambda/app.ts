@@ -1,11 +1,10 @@
-import * as AWS  from 'aws-sdk';
-
 export async function handler(event: any) {
-
-    console.log(event)
+    const id = event.pathParameters.id;
 
     return {
         statusCode: 200,
-        body: 'hello world',
+        body: JSON.stringify({
+            message: `your request message id is ${id}`
+        }),
     }
 }
