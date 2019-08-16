@@ -4,12 +4,10 @@ import { Duration } from '@aws-cdk/core';
 import cdk = require('@aws-cdk/core');
 
 export class AwscdkMultiStackSampleStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: cdk.Construct, id: string, systemEnv:string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     // The code that defines your stack goes here
-
-    const systemEnv = process.env.SYSTEM_ENV ? process.env.SYSTEM_ENV : 'dev';
 
     // Lambda
     const sampleLambda = new lambda.Function(this, 'multi-sample-Lambda', {
@@ -37,7 +35,3 @@ export class AwscdkMultiStackSampleStack extends cdk.Stack {
     idResource.addMethod('GET', integration);
   }
 }
-
-const app = new cdk.App();
-new AwscdkMultiStackSampleStack(app, 'AWS-CDK-Multi-Stack');
-app.synth();
